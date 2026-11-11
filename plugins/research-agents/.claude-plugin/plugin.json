@@ -1,0 +1,18 @@
+{
+    "name": "research-agents",
+    "version": "1.0.0",
+    "description": "Full research team.",
+    "author":
+    {
+        "name": "Pablo González García",
+        "url": "https://mrpumpkin.dev"
+    },
+    "repository": "https://github.com/P4blo003/claude-agents",
+    "license": "MIT",
+    "keywords":
+    [
+        "agents", "research", "literature-review",
+        "data-analysis", "academic-writing",
+        "research-software", "reproducibility"
+    ]
+}
