@@ -1,0 +1,17 @@
+{
+    "name": "dev-agents",
+    "version": "1.0.0",
+    "description": "Full software development team.",
+    "author":
+    {
+        "name": "Pablo González García",
+        "url": "https://mrpumpkin.dev"
+    },
+    "repository": "https://github.com/P4blo003/claude-agents",
+    "license": "MIT",
+    "keywords":
+    [
+        "agents", "software-development", "architecture",
+        "testing", "code-review"
+    ]
+}
