@@ -7,7 +7,7 @@ Only the **PI** approves, rejects or changes a decision. The coordinator and the
 ## D-001 — <title>
 
 - Date proposed:
-- Gate: G1 | G2 | G3 | G4 | G5 | other
+- Gate: G1 | G2 | G3 | G4 | G5 | GR (review) | other
 - Context:
 - Options:
   - **A** — … (pros / cons)

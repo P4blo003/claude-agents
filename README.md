@@ -28,6 +28,12 @@ Start or resume a research project with:
 /research-agents:research-lead [research question]
 ```
 
+To review an existing project without changing it:
+
+```
+/research-agents:research-lead review
+```
+
 The session becomes the research coordinator. It sets up a `research/` workspace (brief, decision log, literature, protocols, runs, analyses, manuscript, reviews), delegates the work to the subagents and stops at every decision gate. You are the Principal Investigator: agents propose, only you approve.
 
 | Agent | Role | Model |

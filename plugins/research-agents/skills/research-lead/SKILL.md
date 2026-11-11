@@ -1,7 +1,7 @@
 ---
 name: research-lead
-description: Coordinate a research project with the research-agents team. Sets up the research/ workspace, delegates to the specialist subagents (literature, methodology, software, experiments, analysis, writing, peer review) and stops at every PI decision gate. Use to start a new research project or to resume one that already has a research/ folder.
-argument-hint: "[research question, or phase to resume]"
+description: Coordinate a research project with the research-agents team. Sets up the research/ workspace, delegates to the specialist subagents (literature, methodology, software, experiments, analysis, writing, peer review) and stops at every PI decision gate. Use to start a new research project, to resume one that already has a research/ folder, or to review an existing project without changing it.
+argument-hint: "[research question | phase to resume | review]"
 disable-model-invocation: true
 ---
 
@@ -23,7 +23,12 @@ PI (human) — final authority on every scientific decision
 
 Subagents cannot call each other or talk to the PI. **You** delegate, pass context between them, merge their reports, and bring the PI the decisions that matter, already prepared. When a subagent stops with a question, take it to the PI and relaunch the subagent with the answer.
 
-If the PI invoked this skill with arguments, treat them as the research question or as the phase to resume.
+If the PI invoked this skill with arguments, treat them as the research question, the phase to resume, or a request for a review.
+
+## Choose the mode
+
+- **Build mode** (default) — a new project, or one that already has a `research/` folder: follow Step 0 and the phases below.
+- **Review mode** — the PI asks for a review of existing work (code, results, drafts) that was not produced with this workflow: follow "Review mode" at the end of this file, then return to build mode for whatever the PI decides to change.
 
 ## Step 0 — Set up or resume the workspace
 
@@ -100,3 +105,17 @@ Talk to the PI in the language the PI writes in. Research artifacts are written 
 - `git push`, or commit without being asked
 - Hide negative results, reviewer criticism or a failed run from the PI
 - Implement the PI's core contribution, or have a subagent implement it, unless the PI asks for it explicitly
+
+## Review mode — auditing an existing project
+
+Goal: an independent, prioritized review of work that already exists, without changing it. Nothing outside `research/` is created, moved or modified.
+
+1. **Inventory (read-only).** Map the project: the question and claims as stated in READMEs or drafts, code, data and its documentation, configs, experiment scripts, results, notebooks, figures, drafts and references. Note what is missing. Do not run anything heavy.
+2. **Workspace.** Create `research/` with `BRIEF.md` and `DECISIONS.md` only. Draft the brief from the inventory with `Status: PROPOSED`: question, the claims the project makes or intends to make, research type, stage, target venue, and the existing layout in the "Code and folder mapping" section.
+3. **G1 — scope of the review.** The PI confirms the brief and decides which claims and parts to review, the domain review criteria, and whether to include a literature positioning check. Reviewers judge the work against its claims; without this gate they would have to guess them.
+4. **Independent reviews, in parallel.** Each reviewer gets the approved brief and the folder mapping, and none sees the others' reports:
+   - **reviewer-2** — full scientific review at the stage the PI confirmed.
+   - **research-software-engineer** — a code review task (see its "Code review tasks" section): metrics, splits, evaluation and leakage first, then reproducibility, tests, design and standards.
+   - **literature-scout** (only if the PI wants it) — the closest prior work and how the project compares with it.
+5. **Consolidate.** Write `research/reviews/SUMMARY-<YYYY-MM-DD>.md`: merge duplicate findings across reports (keeping a reference to each source report), order them by severity, and give each one the proposed action, the agent that would do it, and whether it is a fix or a limitation to disclose. Do not soften or drop findings, and keep disagreements between reviewers visible.
+6. **GR — the PI decides.** Add one DECISIONS entry (gate GR) with the actions as options. Approved actions continue in build mode: a protocol for new or corrected experiments (G3), fixes by research-software-engineer, new runs by experiment-engineer. Results produced before a fix stay as they are; runs after it are new runs.
