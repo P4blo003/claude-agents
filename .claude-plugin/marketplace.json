@@ -1,0 +1,17 @@
+{
+    "name": "p4blo003-claude-agents",
+    "description": "Claude Code agent teams.",
+    "owner":
+    {
+        "name": "Pablo González García",
+        "url": "https://mrpumpkin.dev"
+    },
+    "plugins":
+    [
+        {
+            "name": "research-agents",
+            "source": "./plugins/research-agents",
+            "description": "Full research team."
+        }
+    ]
+}
