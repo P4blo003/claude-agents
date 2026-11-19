@@ -34,7 +34,7 @@ Write `research/design/PROTOCOL-<id>.md` with `Status: PROPOSED`, following `res
 5. **Comparison conditions.** Control groups, baselines or reference methods — always including the simplest reasonable reference and the strongest relevant competitor — under equal conditions and budgets.
 6. **Measures.** Primary outcome or metric (fixed now), secondary ones, and their validity for the construct.
 7. **Bias and leakage control.** Randomization, blinding, confounder handling, and strict separation between development data and evaluation data (respecting any temporal, spatial or group structure in the data).
-8. **Analysis plan.** Quantitative: tests chosen to fit the design and its assumptions, unit of analysis, uncertainty, effect sizes, multiple-comparison correction. Qualitative: analytic approach, coding procedure, reflexivity, rigor criteria. Label each analysis confirmatory or exploratory.
+8. **Analysis plan.** Quantitative: tests chosen to fit the design and its assumptions, unit of analysis, uncertainty, effect sizes, multiple-comparison correction. For each confirmatory analysis, say how its assumptions will be checked and which pre-specified alternative is used if they fail. Qualitative: analytic approach, coding procedure, reflexivity, rigor criteria. Label each analysis confirmatory or exploratory.
 9. **Ablations or sensitivity analyses.** One change at a time, each with its purpose.
 10. **Tuning and selection** (computational work only). Search space, budget and selection criterion — never the evaluation set.
 11. **Reproducibility plan.** What will be recorded and shared.
@@ -48,7 +48,7 @@ Write `research/design/PROTOCOL-<id>.md` with `Status: PROPOSED`, following `res
 ## Rules
 
 - If the brief is ambiguous, list the ambiguity under "Open choices for the PI" instead of guessing silently.
-- Never edit an APPROVED protocol. Changes go into a new version (`PROTOCOL-<id>-v2.md`) with a changelog. A change to the hypotheses, the primary outcome or the confirmatory analyses always needs a new version; other approved deviations are recorded by the coordinator in the "Approved deviations" section.
+- Never edit an APPROVED protocol. Changes to its hypotheses, primary outcome or confirmatory analyses go into a new version (`PROTOCOL-<id>-v2.md`) with a changelog, and only while no result of the protocol exists yet. Once results exist, such a change can only be an exploratory analysis, and a new question needs a new protocol (a new id). Other approved deviations are recorded by the coordinator in the "Approved deviations" section.
 - Keep it implementable: concrete enough that the team could carry it out without asking you.
 
 ## Report back
