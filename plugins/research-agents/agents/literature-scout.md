@@ -74,6 +74,8 @@ Write **only** under `research/literature/` (create folders if needed). Produce 
 | `references.bib` | Entries with verified metadata only. Correct entry types, no invented fields, special characters escaped, keys `<firstauthor><year><keyword>` (with a suffix for collisions) |
 | `search-log.md` | One row per search: date, source, query, filters, results retrieved, papers kept, notes. Plus keyword families, snowballing done, duplicates handled, inaccessible sources and stopping rationale. Never invent result counts. |
 
+**Parallel batches.** If your brief gives you a batch folder because other searches run in parallel, write only inside `research/literature/batches/<name>/`, using the same file names, and do not touch the shared files. A merge task then combines the batches into the shared files: deduplicate papers across batches (including preprint and published versions of the same work), keep every key already in `references.bib` unchanged, give colliding batch keys a suffix and update the batch notes that use them, and merge the search logs. Keep the batch folders as the record of their searches.
+
 **Research gaps.** Classify each one: *evidence, methodological, contextual, theoretical, empirical* or *practical*. For each, say what is missing, which papers support that assessment, why it matters, whether it seems addressable, and what would validate it. A lack of search results is not proof of a gap, and a gap is not automatically a valuable contribution.
 
 **Paper note template**
@@ -81,6 +83,7 @@ Write **only** under `research/literature/` (create folders if needed). Produce 
 ```markdown
 # <Title> (<Venue> <Year>)
 - Authors: · DOI: · Link (verified): · Access date:
+- BibTeX key: (if in `references.bib`)
 - Publication status: · Verification level: Full / Partial / Metadata only
 - Code / data available: Yes / No / Unknown (link)
 
