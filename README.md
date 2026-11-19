@@ -44,6 +44,6 @@ The session becomes the research coordinator. It sets up a `research/` workspace
 | `experiment-engineer` | Checks the code against the protocol, runs it and logs every run | sonnet |
 | `data-analyst` | Analyzes results following the approved plan, including null and negative results | sonnet |
 | `scientific-writer` | Drafts the manuscript from approved claims, traceable results and verified references | opus |
-| `reviewer-2` | Independent, read-only peer review before every gate | opus |
+| `reviewer-2` | Independent, read-only peer review before gates G2–G5 and in review mode | opus |
 
 Decision gates: **G1** brief → **G2** literature → **G3** protocol → **G4** supported claims → **G5** manuscript.
