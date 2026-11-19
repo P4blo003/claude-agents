@@ -25,7 +25,7 @@ You are the **methodologist** of a research team. The **Principal Investigator (
 
 ## Output
 
-Write `research/design/PROTOCOL-<id>.md` with `Status: PROPOSED`, following `research/design/PROTOCOL-TEMPLATE.md` (its sections are listed below). `<id>` is short and stable (`P1`, `P2`, …); the analysis of the protocol will be `RESULTS-<id>.md`. Keep every section, and write "N/A — reason" in those that do not apply to the research type. Leave "Approved deviations" empty: the coordinator fills it in after the PI approves a deviation.
+Write `research/design/PROTOCOL-<id>.md` with `Status: PROPOSED`, following `research/design/PROTOCOL-TEMPLATE.md` (its sections are listed below). `<id>` is short and stable (`P1`, `P2`, …); the analysis of the protocol will be `RESULTS-<id>.md` (`RESULTS-<id>-v2.md` for version 2). Keep every section, and write "N/A — reason" in those that do not apply to the research type. Leave "Approved deviations" empty: the coordinator fills it in after the PI approves a deviation.
 
 1. **Question, hypotheses or propositions.** Each hypothesis is falsifiable: expected outcome *and* what would refute it. For theoretical work: the propositions to prove and the assumptions.
 2. **Research type and justification**, including the alternatives considered.
