@@ -1,6 +1,6 @@
 # Protocol <id> — <short title>
 
-Status: DRAFT  <!-- DRAFT → PROPOSED → APPROVED (only the PI approves). Approved protocols are frozen: the only later addition is a row in "Approved deviations"; any other change goes in a new version. -->
+Status: DRAFT  <!-- DRAFT → PROPOSED → APPROVED (only the PI approves) → SUPERSEDED when a newer version is approved. Approved protocols are frozen: the only later addition is a row in "Approved deviations"; any other change goes in a new version, and only while no result exists yet. -->
 Version: v1
 Related decisions: D-xxx
 Research type:
@@ -40,6 +40,7 @@ Applicable reporting guideline / standard:
 
 - Confirmatory analyses:
 - Exploratory analyses (labelled as such):
+- Assumption checks and pre-specified fallbacks (what each confirmatory analysis uses if its assumptions fail):
 - Quantitative: methods, assumptions, unit of analysis, uncertainty, effect sizes, multiplicity
 - Qualitative: approach, coding procedure, rigor criteria
 
@@ -66,7 +67,7 @@ Applicable reporting guideline / standard:
 ## Approved deviations
 
 <!-- Filled in by the coordinator only, after the PI approves a deviation. Leave it empty when proposing the protocol.
-     A change to the hypotheses, the primary outcome or the confirmatory analyses is not a deviation: it needs a new protocol version. -->
+     A change to the hypotheses, the primary outcome or the confirmatory analyses is not a deviation: before any result exists it needs a new protocol version; after, the changed analysis can only be exploratory. -->
 
 | Decision | Date | Section | What changed and why | Runs or analyses affected |
 |---|---|---|---|---|
