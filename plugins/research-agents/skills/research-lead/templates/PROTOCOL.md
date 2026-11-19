@@ -1,6 +1,6 @@
 # Protocol <id> — <short title>
 
-Status: PROPOSED  <!-- PROPOSED → APPROVED (only the PI approves). Approved protocols are frozen; changes go in a new version. -->
+Status: DRAFT  <!-- DRAFT → PROPOSED → APPROVED (only the PI approves). Approved protocols are frozen: the only later addition is a row in "Approved deviations"; any other change goes in a new version. -->
 Version: v1
 Related decisions: D-xxx
 Research type:
@@ -62,6 +62,14 @@ Applicable reporting guideline / standard:
 ## 17. Open choices for the PI
 
 1. … — Options: … — Recommendation: …
+
+## Approved deviations
+
+<!-- Filled in by the coordinator only, after the PI approves a deviation. Leave it empty when proposing the protocol.
+     A change to the hypotheses, the primary outcome or the confirmatory analyses is not a deviation: it needs a new protocol version. -->
+
+| Decision | Date | Section | What changed and why | Runs or analyses affected |
+|---|---|---|---|---|
 
 ## Changelog
 

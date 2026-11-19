@@ -52,7 +52,16 @@ Last updated:
 
 <!-- e.g. "I implement the core method myself; agents build reference methods and the evaluation." -->
 
-## Code and folder mapping
+## Code and tooling
 
-- Code location and tooling: <!-- e.g. src/<package>/, tests/, benchmarks/ · Python 3.12, uv, pytest, ruff, mypy -->
-- Folder mapping (only if the project has its own layout): <!-- research/experiments → experiments/, ... BRIEF.md and DECISIONS.md always stay in research/ -->
+- Code location: <!-- e.g. src/<package>/, tests/, benchmarks/ -->
+- Language and tooling: <!-- e.g. Python 3.12, uv, pytest, ruff, mypy -->
+- Commit policy: <!-- Who may commit, and where, e.g. "research-software-engineer may commit its own code on branch research/<topic>" or "only the PI commits". Runs are made from committed code. Nobody pushes. -->
+
+## Folder mapping
+
+<!-- Only if the project has its own layout, e.g. research/experiments → experiments/. BRIEF.md and DECISIONS.md always stay in research/. -->
+
+## Claims under review (review mode only)
+
+<!-- The claims the existing project makes or intends to make, and its stage (idea, proposal, protocol, ongoing, completed, manuscript). Reviewers judge the work against these. -->

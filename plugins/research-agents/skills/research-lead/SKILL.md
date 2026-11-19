@@ -32,7 +32,7 @@ If the PI invoked this skill with arguments, treat them as the research question
 
 ## Step 0 — Set up or resume the workspace
 
-If `research/` already exists, read `research/BRIEF.md` and `research/DECISIONS.md`, work out the current phase and the open decisions, and summarize them to the PI before doing anything else.
+If `research/` already exists, read `research/BRIEF.md` and `research/DECISIONS.md`, and also `research/experiments/RUNS.md`, `research/experiments/DATA-INTAKE.md` and the latest reports in `research/reviews/` when they exist. Work out the current phase, the open decisions and any runs still marked `running`, and summarize them to the PI before doing anything else.
 
 Otherwise, create it:
 
@@ -48,30 +48,38 @@ research/
 └── reviews/
 ```
 
-The templates are in the `templates/` folder next to this file. If the project already has its own layout, map these roles onto it and record the mapping in the "Folder mapping" section of `BRIEF.md` instead of duplicating folders. `BRIEF.md` and `DECISIONS.md` always stay in `research/`, so every agent can find the mapping. Code lives in the project's source tree, not in `research/`.
+The templates are in `${CLAUDE_SKILL_DIR}/templates/`. If the project already has its own layout, map these roles onto it and record the mapping in the "Folder mapping" section of `BRIEF.md` instead of duplicating folders. `BRIEF.md` and `DECISIONS.md` always stay in `research/`, so every agent can find the mapping. Code lives in the project's source tree, not in `research/`; the only scripts in `research/` are the run configs and launch script of experiment-engineer and the analysis scripts of data-analyst.
 
-Then either ask the PI to fill in `BRIEF.md`, or interview the PI (at most 5 short questions) and draft it with `Status: PROPOSED`.
+Then either ask the PI to fill in `BRIEF.md`, or interview the PI (at most 5 short questions) and draft it with `Status: PROPOSED`. The brief must state the commit policy (who may commit, and where), because runs are made from committed code.
 
 ## Phases and decision gates
 
 | Phase | Who works | Gate | The PI decides |
 |---|---|---|---|
-| 1. Framing | you | **G1** | Brief approved: question, discipline, research type, scope, constraints, target venue, deadline |
+| 1. Framing | you | **G1** | Brief approved: question, discipline, research type, scope, constraints, target venue, deadline, commit policy |
 | 2. Literature | literature-scout (→ reviewer-2 on novelty) | **G2** | Proceed / pivot / stop, given the closest prior work |
 | 3. Design | methodologist → reviewer-2 | **G3** | Protocol and domain review criteria approved; from then on the protocol is frozen |
 | 4. Execution | research-software-engineer builds and tests the code → reviewer-2 checks it against the protocol → experiment-engineer runs it. The PI does fieldwork, lab work or data collection | (stops for cost, deviations or code problems) | Expensive runs, protocol deviations |
-| 5. Analysis | data-analyst (research-software-engineer for reusable plotting or statistics tooling) → reviewer-2 | **G4** | Which claims are supported and go into the output |
+| 5. Analysis | data-analyst (research-software-engineer for reusable plotting or statistics tooling) → research-software-engineer checks that the results regenerate → reviewer-2 | **G4** | Which claims are supported and go into the output |
 | 6. Writing | scientific-writer → reviewer-2 | **G5** | Manuscript approved. **Only the PI submits.** |
 
 Phases can loop back: a G2 pivot returns to phase 1, a weak result at G4 can lead to a new protocol. Skip what does not apply to the research type — for example, purely theoretical work has no execution phase, and the methodologist plans the proofs instead. research-software-engineer can take coding tasks in any phase (a search script for the literature, a figure pipeline for the manuscript).
 
+Bookkeeping in phases 4 and 5:
+
+- **Long runs.** experiment-engineer launches them detached and logs them as `running` in `RUNS.md`. Before phase 5, relaunch experiment-engineer to collect them; start the analysis only when every run it needs has a final status.
+- **Data the PI collects.** Ask the PI for the details and record each batch in `research/experiments/DATA-INTAKE.md` before phase 5: `| date | source | what was collected | version or checksum | exclusions at collection, and why | location |`. data-analyst reads it in place of `RUNS.md`.
+- **Regeneration check (before G4).** Give research-software-engineer a code-review task that allows rerunning the analysis scripts: it reruns them from the saved outputs into a temporary folder outside the project and compares every number with the RESULTS file. Bring any difference to the PI with the gate.
+
 ## How a gate works
 
+Every gate, and every protocol deviation proposed by any agent (gate `deviation`), follows these steps:
+
 1. Collect the evidence: the specialist's report plus the reviewer-2 review whenever the table above lists it.
-2. Add an entry to `research/DECISIONS.md` with `Status: PROPOSED`: context, options with pros and cons, your recommendation, and the reviewer-2 notes.
-3. **Stop and ask the PI.** Use AskUserQuestion when it is available, with the options from the entry. Do not continue past the gate without an explicit answer.
-4. Record the PI's answer in the entry, verbatim and dated, under `PI decision`. Mark it APPROVED / REJECTED / CHANGED **only** when the PI has said so explicitly in this conversation.
-5. **Apply the approval.** Only after an explicit approval, set the `Status:` line of the approved artifact (`BRIEF.md` at G1, the protocol at G3) to `APPROVED — D-xxx, <date>`. At G3, also copy the approved domain review criteria (section 16 of the protocol) into the "Domain standards and review criteria" section of `BRIEF.md`, citing the decision. These are the only edits ever made to an approved artifact. A later change to the brief needs a new decision and reopens G1; a change to a protocol becomes a new protocol version.
+2. Add an entry to `research/DECISIONS.md` with `Status: PROPOSED`: context, options with pros and cons, your recommendation, and the reviewer-2 notes. At G4, list every candidate claim verbatim with its id, its tag and its evidence path, so the PI can approve, reject or rephrase each one.
+3. **Stop and ask the PI.** Use AskUserQuestion when it is available, with the options from the entry; when they do not fit in it (for example many claims at G4), list them in text and ask the PI to answer each one. Do not continue past the gate without an explicit answer.
+4. Record the PI's answer in the entry, verbatim and dated, under `PI decision` — at G4, with the final wording of each approved claim. Mark it APPROVED / REJECTED / CHANGED **only** when the PI has said so explicitly in this conversation.
+5. **Apply the approval.** Only after an explicit approval, set the `Status:` line of the approved artifact (`BRIEF.md` at G1, the protocol at G3) to `APPROVED — D-xxx, <date>`. At G3, also copy the approved domain review criteria (the "Domain review criteria" section of the protocol) into the "Domain standards and review criteria" section of `BRIEF.md`, citing the decision. For an approved deviation, add a row to the protocol's "Approved deviations" section, citing the decision. These are the only edits ever made to an approved artifact. A later change to the brief needs a new decision and reopens G1. A change to a protocol's hypotheses, primary outcome or confirmatory analyses is not a deviation: it becomes a new protocol version and goes back to G3.
 
 ## How to delegate
 
@@ -83,9 +91,9 @@ Give each subagent a self-contained brief, because it does not see this conversa
 - **Expected output** — file paths and format
 - **Stop conditions** — when to come back instead of continuing
 
-For coding tasks, also give the language and tooling, the interfaces expected, and what counts as done (tests, checks). All code is written by research-software-engineer; experiment-engineer only configures and runs it. When the code changes after runs have started, the following runs are new runs at the new commit — never mix results from different code versions.
+For coding tasks, also give the language and tooling, the interfaces expected, and what counts as done (tests, checks). All library and pipeline code is written by research-software-engineer. experiment-engineer only writes run configs and a thin launch script, and data-analyst only writes the analysis scripts; both ask for anything reusable to be built by research-software-engineer. Runs are made from committed code: before a run campaign starts, have the code committed as the commit policy in `BRIEF.md` allows. When the code changes after runs have started, the following runs are new runs at the new commit — never mix results from different code versions, and tell data-analyst which code version to analyse.
 
-Run independent tasks in parallel (for example, several literature-scout searches on different keyword families). Run reviewer-2 separately, with a fresh brief that does **not** include the author's reasoning, so its review stays independent.
+Run independent tasks in parallel, but never let two parallel tasks write the same files. For example, several literature-scout searches on different keyword families each get their own batch folder (`research/literature/batches/<name>/`), and one final literature-scout task merges the batches into the shared files. Run reviewer-2 separately, with a fresh brief that does **not** include the author's reasoning, so its review stays independent.
 
 ## Reporting to the PI
 
@@ -102,20 +110,20 @@ Talk to the PI in the language the PI writes in. Research artifacts are written 
 - Approve anything on the PI's behalf, or edit an APPROVED decision or protocol beyond step 5 of a gate
 - Start expensive or long runs without the PI's OK
 - Submit, send, publish or share anything outside the project; contact anyone
-- `git push`, or commit without being asked
+- `git push`, or commit beyond what the PI asked for or the commit policy in `BRIEF.md` allows
 - Hide negative results, reviewer criticism or a failed run from the PI
 - Implement the PI's core contribution, or have a subagent implement it, unless the PI asks for it explicitly
 
 ## Review mode — auditing an existing project
 
-Goal: an independent, prioritized review of work that already exists, without changing it. Nothing outside `research/` is created, moved or modified.
+Goal: an independent, prioritized review of work that already exists, without changing it. Nothing outside `research/` is created, moved or modified (tool caches that a check cannot avoid creating are listed in the code-review report).
 
 1. **Inventory (read-only).** Map the project: the question and claims as stated in READMEs or drafts, code, data and its documentation, configs, experiment scripts, results, notebooks, figures, drafts and references. Note what is missing. Do not run anything heavy.
-2. **Workspace.** Create `research/` with `BRIEF.md` and `DECISIONS.md` only. Draft the brief from the inventory with `Status: PROPOSED`: question, the claims the project makes or intends to make, research type, stage, target venue, and the existing layout in the "Code and folder mapping" section.
+2. **Workspace.** Create `research/` with `BRIEF.md` and `DECISIONS.md` only. Draft the brief from the inventory with `Status: PROPOSED`: question, research type, target venue, the claims the project makes or intends to make and its stage in the "Claims under review" section, and the existing layout in the "Code and tooling" and "Folder mapping" sections.
 3. **G1 — scope of the review.** The PI confirms the brief and decides which claims and parts to review, the domain review criteria, and whether to include a literature positioning check. Reviewers judge the work against its claims; without this gate they would have to guess them.
 4. **Independent reviews, in parallel.** Each reviewer gets the approved brief and the folder mapping, and none sees the others' reports:
    - **reviewer-2** — full scientific review at the stage the PI confirmed.
    - **research-software-engineer** — a code review task (see its "Code review tasks" section): metrics, splits, evaluation and leakage first, then reproducibility, tests, design and standards.
    - **literature-scout** (only if the PI wants it) — the closest prior work and how the project compares with it.
-5. **Consolidate.** Write `research/reviews/SUMMARY-<YYYY-MM-DD>.md`: merge duplicate findings across reports (keeping a reference to each source report), order them by severity, and give each one the proposed action, the agent that would do it, and whether it is a fix or a limitation to disclose. Do not soften or drop findings, and keep disagreements between reviewers visible.
+5. **Consolidate.** Write `research/reviews/SUMMARY-<YYYY-MM-DD>.md`: merge duplicate findings across reports (keeping a reference to each source report), order them by severity, and give each one its confidence, the proposed action, the agent that would do it, and whether it is a fix or a limitation to disclose. reviewer-2 and research-software-engineer both use Critical / Major / Minor / Nit, but reviewer-2 grades the impact on the scientific claims and research-software-engineer the impact on results: when merging, keep the higher severity and name its source. Do not soften or drop findings, and keep disagreements between reviewers visible.
 6. **GR — the PI decides.** Add one DECISIONS entry (gate GR) with the actions as options. Approved actions continue in build mode: a protocol for new or corrected experiments (G3), fixes by research-software-engineer, new runs by experiment-engineer. Results produced before a fix stay as they are; runs after it are new runs.
