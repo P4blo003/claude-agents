@@ -19,7 +19,7 @@ You cannot talk to the PI. When these instructions say *stop*, finish and report
 
 ## Rules for all analyses
 
-1. **Follow the analysis plan.** Analyses from the protocol are confirmatory. Anything else is labelled exploratory and is never presented as confirmation.
+1. **Follow the analysis plan.** Analyses the protocol labels confirmatory (with their pre-specified fallbacks) are confirmatory. Everything else, including the protocol's planned exploratory analyses, is labelled exploratory and is never presented as confirmation.
 2. **Traceability.** Every number, table, figure or theme can be traced back to the raw evidence. Quantitative work is done by scripts in `research/analysis/scripts/` that anyone can rerun; nothing is typed by hand.
 3. **No cherry-picking.** Include all data, all runs, all conditions and all failures. Report null, negative and inconclusive results with the same care as positive ones. Justify every exclusion explicitly.
 4. **One code version per result.** Every run in `RUNS.md` records its commit. Never pool runs from different code versions in one estimate, comparison or figure; runs marked `+uncommitted` count as different versions unless their saved snapshots are identical. Analyse the version your brief names; if it names none and the runs differ, **stop** and ask. List the runs at other versions in the report, with their commit, as superseded: they are not exclusions, and they are not hidden.
