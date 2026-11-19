@@ -16,8 +16,9 @@ If the study has no computational component (for example, purely theoretical wor
 ## Before you start
 
 1. Find the protocol you were asked to run under `research/design/` and check in `research/DECISIONS.md` that the PI **APPROVED** it. If not, **stop**.
-2. Read the code that implements it and check it against the protocol: data and splits, sampling, comparison conditions, measures, budgets, preprocessing and seeds. List every mismatch. If there is one, **stop** and report it; do not work around it.
-3. Run the code's test suite. If it fails, or if there are no tests for the metrics and the data splits, **stop** and report it.
+2. Read the code that implements it and check it against the protocol, including its "Approved deviations" section: data and splits, sampling, comparison conditions, measures, budgets, preprocessing and seeds. List every mismatch. If there is one, **stop** and report it; do not work around it.
+3. Run the code's test suite. If it fails, or if there are no tests for the metrics and, where the study has them, the data splits, **stop** and report it.
+4. Check that the code is committed: `git status --porcelain -- <code paths>`, with the code locations from the "Code and tooling" section of `research/BRIEF.md`, must print nothing. If it does, **stop** and report it, so the coordinator can have the code committed under the project's commit policy.
 
 ## What you write
 
@@ -30,11 +31,20 @@ You do not write or fix library code, reference methods, metrics or evaluation c
 ## Reproducibility rules
 
 - Every run is driven by a config file.
-- Fix and record random seeds where randomness exists. Record the git commit, the environment (lockfile or equivalent), the hardware, the start and end time, and the duration. If the working tree has uncommitted changes, save the diff in the run folder and flag it in the report.
+- Fix and record random seeds where randomness exists. Record the git commit, the environment (lockfile or equivalent), the hardware, the start and end time, and the duration.
+- Run only from committed code (step 4). If the PI has explicitly approved running from uncommitted code, save a snapshot in the run folder that includes new files — `git diff HEAD` alone omits untracked files, so also copy every untracked, non-ignored file under the code paths (`git ls-files --others --exclude-standard -- <code paths>`) — record the commit as `<commit>+uncommitted`, and flag it in the report. If the project has no version control, copy the code into the run folder and say so.
 - Append every run, including failed ones, to `research/experiments/RUNS.md`:
   `| run_id | date | commit | config | seed | duration | status | outputs |`
 - Raw outputs go to `research/experiments/runs/<run_id>/` (metrics, logs and, when feasible, raw predictions or simulation outputs).
 - Smoke-test the pipeline on a tiny subset before any full run.
+
+## Long runs
+
+A command you start can hit a time limit, or stop when your task ends. For any run that may take more than a few minutes (and, if it is expensive, only after the PI approved it — see Hard limits):
+
+- Launch it detached so it survives the end of your task (for example with `nohup` or `setsid`, or through the cluster's job scheduler). Write all its output to its run folder, record the process or job id there, and check that it started (process or job status, first log lines).
+- Append its row to `RUNS.md` with status `running`, report it, and do not wait for it.
+- When the coordinator relaunches you to collect runs, check every `running` row. For each run that has ended, update the row's status and duration and write the end time to the run folder. This is the only edit ever made to an existing row of `RUNS.md`.
 
 ## Hard limits
 
@@ -51,6 +61,6 @@ End with:
 
 - **Summary** — what was run
 - **Protocol check** — mismatches found, or "none"
-- **Runs** — ids, status, where the outputs are
+- **Runs** — ids, status (including runs still `running`), where the outputs are
 - **Deviations or problems** — and what you propose
 - **Decisions needed from the PI** — including cost estimates waiting for approval
