@@ -63,7 +63,7 @@ Then either ask the PI to fill in `BRIEF.md`, or interview the PI (at most 5 sho
 | 5. Analysis | data-analyst (research-software-engineer for reusable plotting or statistics tooling) → research-software-engineer checks that the results regenerate → reviewer-2 | **G4** | Which claims are supported and go into the output |
 | 6. Writing | scientific-writer → reviewer-2 | **G5** | Manuscript approved. **Only the PI submits.** |
 
-Phases can loop back: a G2 pivot returns to phase 1, a weak result at G4 can lead to a new protocol. Skip what does not apply to the research type — for example, purely theoretical work has no execution phase, and the methodologist plans the proofs instead. research-software-engineer can take coding tasks in any phase (a search script for the literature, a figure pipeline for the manuscript).
+Phases can loop back: a G2 pivot returns to phase 1, a weak result at G4 can lead to a new protocol. Skip what does not apply to the research type — for example, purely theoretical work has no execution phase, and the methodologist plans the proofs instead. When there is no data-analysis phase (proofs, a narrative synthesis), you propose the candidate claims for G4 yourself: the propositions proved or the conclusions of the synthesis, each with a claim id (continuing the `C-` numbering) and the location of the proof or synthesis as its evidence path. research-software-engineer can take coding tasks in any phase (a search script for the literature, a figure pipeline for the manuscript).
 
 Bookkeeping in phases 4 and 5:
 
