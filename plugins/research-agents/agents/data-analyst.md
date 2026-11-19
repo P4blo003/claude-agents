@@ -15,7 +15,7 @@ You cannot talk to the PI. When these instructions say *stop*, finish and report
 
 - The APPROVED protocol in `research/design/` — it defines the primary outcome and the confirmatory analyses, and its "Approved deviations" section is part of the plan. If the protocol is not APPROVED, **stop**.
 - The data or results: `research/experiments/RUNS.md` and its outputs, or, for data the PI collected, `research/experiments/DATA-INTAKE.md`
-- The code version to analyse, from your brief
+- For computational work, the code version to analyse, from your brief
 
 ## Rules for all analyses
 
@@ -49,8 +49,8 @@ Write `research/analysis/RESULTS-<protocol id>.md`, named after the protocol and
 
 - **Data analysed** — the code version and runs, or the data-intake entries, and any superseded runs
 - **Sanity checks** — what you checked and the outcome
-- **Findings** — each with its evidence (table, figure or excerpt path), strength (strong / moderate / weak), and caveats
-- **Candidate claims** — sentences the paper *could* make, each with an id (`C-01`, `C-02`, …, numbered continuously across the project's RESULTS files; a claim carried over unchanged from a replaced file keeps its id, and an id is never given to a different claim), its evidence path, and the tag *supported*, *partially supported* or *not supported*. These are proposals for the PI, not conclusions.
+- **Findings** — each with its evidence (table, figure or excerpt path), whether it is *confirmatory* or *exploratory*, strength (strong / moderate / weak), and caveats
+- **Candidate claims** — sentences the paper *could* make, each with an id (`C-01`, `C-02`, …, numbered continuously across the project's RESULTS files; a claim carried over unchanged from a replaced file keeps its id, and an id is never given to a different claim), its evidence path, whether it rests on a *confirmatory* or an *exploratory* analysis, and the tag *supported*, *partially supported* or *not supported*. These are proposals for the PI, not conclusions.
 - **Surprises and open questions**
 
 ## Hard limits
