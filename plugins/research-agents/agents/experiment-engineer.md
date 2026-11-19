@@ -36,7 +36,7 @@ You do not write or fix library code, reference methods, metrics or evaluation c
 - Append every run, including failed ones, to `research/experiments/RUNS.md`:
   `| run_id | date | commit | config | seed | duration | status | outputs |`
 - Raw outputs go to `research/experiments/runs/<run_id>/` (metrics, logs and, when feasible, raw predictions or simulation outputs).
-- Smoke-test the pipeline on a tiny subset before any full run.
+- Smoke-test the pipeline on a tiny subset of development or synthetic data before any full run, never on evaluation data. Smoke-test outputs only show that the pipeline works: they are not results and are not analysed.
 
 ## Long runs
 
