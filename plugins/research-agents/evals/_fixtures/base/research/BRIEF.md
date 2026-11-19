@@ -53,7 +53,7 @@ The PI implements the curriculum scheduler.
 
 ## Code and tooling
 
-- Code location: src/curriculum/, tests/
+- Code location: separate repository `curriculum-code` (src/curriculum/, tests/); the commits in RUNS.md refer to it. Analysis scripts live in research/analysis/scripts/.
 - Language and tooling: Python 3.12, uv, pytest, ruff
 - Commit policy: research-software-engineer may commit its own code on branch research/curriculum. Nobody pushes.
 

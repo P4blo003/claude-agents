@@ -1,0 +1,3 @@
+condition,n,median,q1,q3,commit,analysis
+curriculum,10,0.305,0.275,0.3525,a1b2c3d,exploratory
+random,10,0.12,0.0925,0.1375,a1b2c3d,exploratory

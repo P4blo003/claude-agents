@@ -1,0 +1,3 @@
+measure,analysis,test,alternative,U_curriculum,p,rank_biserial_curriculum_lower
+steps_to_threshold,confirmatory,exact permutation Mann-Whitney,less,30.5,0.0736,0.39
+final_exact_match,confirmatory,exact permutation Mann-Whitney,two-sided,54,0.871,-0.08

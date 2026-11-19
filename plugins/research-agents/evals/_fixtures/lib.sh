@@ -37,10 +37,11 @@ runs_log() {
   } > research/experiments/RUNS.md
 }
 
-# add_run <run_id> <commit> <condition> <seed> <completed|running> [steps_to_threshold]
+# add_run <run_id> <commit> <condition> <seed> <completed|running> [steps_to_threshold] [final_exact_match] [exact_match_9digit]
+# A completed run gets metrics.json, its evaluation log and exit code 0; final_exact_match defaults to 0.995.
 add_run() {
-  local id=$1 commit=$2 cond=$3 seed=$4 status=$5 steps=${6:-}
-  local dir="research/experiments/runs/$id" duration='—'
+  local id=$1 commit=$2 cond=$3 seed=$4 status=$5 steps=${6:-} final=${7:-0.995} len9=${8:-}
+  local dir="research/experiments/runs/$id" duration='—' extra=''
   mkdir -p "$dir"
   cp "research/experiments/configs/$cond.yaml" "$dir/config.yaml"
   echo "python -m curriculum.train --config research/experiments/configs/$cond.yaml --seed $seed --out $dir" > "$dir/command.txt"
@@ -48,8 +49,11 @@ add_run() {
     completed)
       [ -n "$steps" ] || die "add_run $id: a completed run needs steps_to_threshold"
       duration='44m'
-      printf '{"condition": "%s", "seed": %s, "commit": "%s", "steps_to_threshold": %s}\n' \
-        "$cond" "$seed" "$commit" "$steps" > "$dir/metrics.json"
+      [ -n "$len9" ] && extra=", \"exact_match_9digit\": $len9"
+      printf '{"condition": "%s", "seed": %s, "commit": "%s", "steps_to_threshold": %s, "final_exact_match": %s%s}\n' \
+        "$cond" "$seed" "$commit" "$steps" "$final" "$extra" > "$dir/metrics.json"
+      printf 'step %s eval_exact_match 0.931\nstep %s eval_exact_match 0.944\nstep %s eval_exact_match 0.951\nstep 20000 eval_exact_match %s\n' \
+        "$((steps - 200))" "$((steps - 100))" "$steps" "$final" > "$dir/eval.log"
       echo 0 > "$dir/exit_code"
       ;;
     running)
@@ -62,12 +66,13 @@ add_run() {
     "$id" "$commit" "$cond" "$seed" "$duration" "$status" "$id" >> research/experiments/RUNS.md
 }
 
-# add_completed <commit> <condition> <seed>=<steps> ...   (run ids r01, r02, … in call order)
+# add_completed <commit> <condition> <seed>=<steps>[:<final>[:<len9>]] ...   (run ids r01, r02, … in call order)
 add_completed() {
-  local commit=$1 cond=$2 pair
+  local commit=$1 cond=$2 pair steps final len9
   shift 2
   for pair in "$@"; do
-    add_run "$(printf 'r%02d' "$next_run")" "$commit" "$cond" "${pair%%=*}" completed "${pair#*=}"
+    IFS=: read -r steps final len9 <<< "${pair#*=}"
+    add_run "$(printf 'r%02d' "$next_run")" "$commit" "$cond" "${pair%%=*}" completed "$steps" "${final:-0.995}" "$len9"
     next_run=$((next_run + 1))
   done
 }

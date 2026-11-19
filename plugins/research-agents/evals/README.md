@@ -29,12 +29,16 @@ To run one case, add `--case <name>`; to run only the gate cases, add `--tag gat
 
 ## Layout
 
-- `_fixtures/base/` — an approved project: brief, decisions D-001–D-003 and protocol P1.
-- `_fixtures/overlays/` — the results and reviews that some cases add on top.
-- `_fixtures/lib.sh` — helpers the scaffold scripts use to build the run log.
+- `_fixtures/base/` — an approved project: brief, decisions D-001–D-003 and protocol P1. The project's code is in a separate repository that is not part of the fixture; the commits in the run log refer to it.
+- `_fixtures/overlays/` — what some cases add on top: `analysis-script` (a small, working analysis script), and `g4` and `null-result` (the script's tables, RESULTS-P1 and, for `g4`, the regeneration check and reviewer-2's review).
+- `_fixtures/lib.sh` — helpers the scaffold scripts use to build the run log, each run's `metrics.json`, `eval.log` and exit code.
 - `<case>/fixture.sh` — builds that case's workspace. It finds `_fixtures/` relative to its own path; if a run fails with `scaffold failed`, check that first.
 - `results/` — written by each run and ignored by git.
+
+Every number in the fixtures can be traced to the run data. If you change the run values in a `fixture.sh`, build that workspace, rerun `research/analysis/scripts/analyse_p1.py --runs research/experiments/runs --out research/analysis/tables` in it, copy the tables into the case's overlay and update its `RESULTS-P1.md`. A fixture with a wrong number tests the wrong thing: a coordinator or reviewer that spots it is right to stop.
 
 ## Reading a failure
 
 Open the report the run prints. For an `llm` grader, the judge's explanation says what was missing. For a regex grader on `DECISIONS.md` with `count:3`, a failure means a fourth `Status: APPROVED` appeared, so the coordinator approved something on the PI's behalf.
+
+`template-from-skill-dir` in `g1-new-project-stops-at-brief` needs the run to read the skill's `templates/` folder, which is outside the workspace. Eval runs never ask for permission, so if that read is denied the grader fails for a reason that has nothing to do with the skill. Before treating that failure as a defect, look in the run's transcript for a denied `Read`.
