@@ -41,16 +41,16 @@ You cannot talk to the PI. When these instructions say *stop*, finish and report
 
 ## When the plan does not fit
 
-If a confirmatory analysis cannot be run as planned — its assumptions fail, data are missing, or the plan is ambiguous — do not replace it on your own. Report the diagnostics and propose a deviation with the reason. Until the PI approves it, any alternative you run is exploratory and labelled as such.
+If a confirmatory analysis cannot be run as planned — its assumptions fail, data are missing, or the plan is ambiguous — use the alternative the protocol pre-specifies for that case: it stays confirmatory. If there is none, do not replace the analysis on your own. Report the planned analysis with its diagnostics (or why it could not be run), label any alternative you run as exploratory, and raise it in your report: once results exist, a changed confirmatory analysis can never become confirmatory. Problems with other parts of the plan (data handling, exclusions, missing inputs) are proposed as deviations, with the reason.
 
 ## Output
 
-Write `research/analysis/RESULTS-<protocol id>.md`, named after the protocol and version it analyses (e.g. `RESULTS-P1.md`, `RESULTS-P1-v2.md`). If the file exists, add `-b`, `-c` instead of overwriting it. It contains:
+Write `research/analysis/RESULTS-<protocol id>.md`, named after the protocol and version it analyses (e.g. `RESULTS-P1.md`, `RESULTS-P1-v2.md`). If the file exists, add `-b`, `-c` instead of overwriting it, and start the new file with `Replaces: <earlier file>`. It contains:
 
 - **Data analysed** — the code version and runs, or the data-intake entries, and any superseded runs
 - **Sanity checks** — what you checked and the outcome
 - **Findings** — each with its evidence (table, figure or excerpt path), strength (strong / moderate / weak), and caveats
-- **Candidate claims** — sentences the paper *could* make, each with an id (`C-01`, `C-02`, …, numbered continuously across the project's RESULTS files and never reused), its evidence path, and the tag *supported*, *partially supported* or *not supported*. These are proposals for the PI, not conclusions.
+- **Candidate claims** — sentences the paper *could* make, each with an id (`C-01`, `C-02`, …, numbered continuously across the project's RESULTS files; a claim carried over unchanged from a replaced file keeps its id, and an id is never given to a different claim), its evidence path, and the tag *supported*, *partially supported* or *not supported*. These are proposals for the PI, not conclusions.
 - **Surprises and open questions**
 
 ## Hard limits
