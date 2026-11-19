@@ -13,7 +13,7 @@ You cannot talk to the PI. When these instructions say *stop*, finish and report
 
 ## Before you write code
 
-1. Read the task, and the APPROVED protocol in `research/design/` if the code implements part of the study. Code that encodes the science (data, splits, sampling, measures, comparison conditions, budgets, preprocessing) must match the protocol exactly. If the protocol is not approved, or is silent or ambiguous on something the code must decide, **stop** and report the question. Do not pick a value yourself.
+1. Read the task, and the APPROVED protocol in `research/design/` if the code implements part of the study. Code that encodes the science (data, splits, sampling, measures, comparison conditions, budgets, preprocessing) must match the protocol exactly, including its "Approved deviations" section. If the protocol is not approved, or is silent or ambiguous on something the code must decide, **stop** and report the question. Do not pick a value yourself.
 2. Read the existing codebase: layout, language, conventions, dependencies, build and test tooling, lint and type-check configuration. Follow them. Do not restructure the project or switch tools unless asked.
 3. If there is no codebase yet, create only what the task needs and describe the layout in your report (e.g. for Python: `pyproject.toml`, `src/<package>/`, `tests/`, `benchmarks/`, `scripts/`).
 
@@ -82,14 +82,15 @@ Untested research code is not finished. Write tests alongside the code with the 
 
 When your brief asks for a code review, change nothing in the project:
 
-- Run only checks that do not modify files: the test suite, and the linter and type checker in check mode (no auto-fix, no formatter in write mode). Nothing heavier than a smoke run, and only if the brief allows it.
+- Run only checks that do not modify files: the test suite, and the linter and type checker in check mode (no auto-fix, no formatter in write mode). Nothing heavier than a smoke run, and only if the brief allows it. Keep tool caches out of the project where the tools allow it (e.g. `pytest -p no:cacheprovider`, `PYTHONDONTWRITEBYTECODE=1`, `ruff check --no-cache`, `mypy --cache-dir=/dev/null`), and list any file the checks still created.
 - Check first what can change a result: metric implementations against their definitions, data splits and leakage, threshold and hyperparameter selection, the evaluation procedure, seeds and determinism, silent data handling. Then reproducibility, tests, design and standards.
-- Write one file: `research/reviews/CODE-REVIEW-<YYYY-MM-DD>.md` (add `-b`, `-c` if it exists). For each finding: location (`file:line`), what is wrong, the evidence, the impact on results, the severity and the proposed fix. Severity: **Critical** — changes or invalidates a reported result; **Major** — could change a result, or blocks reproducing it; **Minor** — quality or maintainability; **Nit** — style. Keep findings that can change results apart from code-quality findings.
+- **Regeneration checks.** When the brief asks you to check that analysis results regenerate, rerun the analysis scripts from the saved outputs into a temporary folder outside the project, compare every number, table and figure with the RESULTS file, and report each difference. Review the scripts as part of the task, statistics first.
+- Write one file: `research/reviews/CODE-REVIEW-<YYYY-MM-DD>.md` (add `-b`, `-c` if it exists). For each finding: location (`file:line`), what is wrong, the evidence, the impact on results, the severity, the confidence (High / Medium / Low) and the proposed fix. Severity: **Critical** — changes or invalidates a reported result; **Major** — could change a result, or blocks reproducing it; **Minor** — quality or maintainability; **Nit** — style. Keep findings that can change results apart from code-quality findings.
 - Report back with: summary, the top issues with their severity, the file written, and the checks you ran with their results.
 
 ## Before reporting
 
-Run the formatter, the linter, the type checker and the full test suite, plus a smoke run of any new entry point on a tiny input. Report the exact commands and their outcomes. Never claim that something passes without having run it; if a check cannot run, say why.
+For a code-review task, skip this section: run only the checks in "Code review tasks". Otherwise, run the formatter, the linter, the type checker and the full test suite, plus a smoke run of any new entry point on a tiny input. Report the exact commands and their outcomes. Never claim that something passes without having run it; if a check cannot run, say why.
 
 ## Hard limits
 
